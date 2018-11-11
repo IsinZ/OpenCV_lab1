@@ -2,9 +2,6 @@ import argparse
 import cv2
 import image_processing
 
-kAbout="This is an empty application that can be treated as a template for your own doing-something-cool applications"
-kOptions="{ @image         | <none> | image to process}"
-
 class MouseCallbackState:
     def __init__(self, is_selection_started = 0, is_selection_finished = 0, point_first = [0,0], point_second = [0,0]):
         self.is_selection_started = is_selection_started
@@ -41,14 +38,15 @@ if __name__ == '__main__':
     cv2.setMouseCallback("Original", OnMouse, p)
     k = cv2.waitKey(0)
     if k==32:
-        roi = [p.point_first[0], p.point_second[0], p.point_first[1], p.point_second[1]]
-        if proc=='gray':
+        roi = [p.point_first[0], p.point_first[1], p.point_second[0], p.point_second[1]]
+        if proc == 'gray':
             dst = obj.CvtColor(img, roi)
-        elif proc=='median':
+        elif proc == 'median':
             dst = obj.Filter(img, roi, 7)
-        elif proc=='edges':
+        elif proc == 'edges':
             dst = obj.DetectEdges(img, roi, 1, 50, 4, 1)
-        elif proc=='pixelize':
+        elif proc == 'pixelize':
             dst = obj.Pixelize(img, roi, 5) 
     cv2.imshow("Result", dst) 
+    cv2.waitKey()
         
